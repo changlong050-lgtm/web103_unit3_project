@@ -6,7 +6,7 @@ const getAllLocations = async () => {
 }
 
 const getLocationById = async (id) => {
-    const response = await fetch(`api/locations/${id}`)
+    const response = await fetch(`api/location/${id}`)
     return await response.json()
 }
 

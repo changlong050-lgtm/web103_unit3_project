@@ -38,8 +38,25 @@ const getLocations = async(req, res)=>{
     }
 }
 
+
+const getLocationById = async(req,res) =>{
+    try{
+        const locationId = req.params.locationId
+        const results = await pool.query(`SELECT * FROM locations WHERE id = $1`, [locationId])
+
+        res.status(200).json(results.rows)
+    }
+
+    catch(error){
+        res.status(409).json({error:error.message})
+    }
+
+}
+
+
 export default {
     getEvents,
     getEventById,
-    getLocations
+    getLocations,
+    getLocationById
 }

@@ -4,7 +4,7 @@ const getAllEvents = async()=>{
 }
 
 const getEventById = async(id)=>{
-    const response = await fetch(`api/events/${id}`)
+    const response = await fetch(`api/event/${id}`)
     return await response.json()
 }
 
