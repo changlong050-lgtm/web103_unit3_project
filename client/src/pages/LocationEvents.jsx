@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import Event from '../components/Event'
 import '../css/LocationEvents.css'
+import LocationsAPI from '../services/LocationsAPI.jsx'
+import EventsAPI from '../services/EventsAPI.jsx'
 
 const LocationEvents = ({index}) => {
     const [location, setLocation] = useState([])
     const [events, setEvents] = useState([])
 
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            const locationData = await LocationsAPI.getLocationById(index)
+            setLocation(locationData[0])
+
+        
+            const allEvents = await EventsAPI.getAllEvents()
+            const locationEvents = allEvents.filter(event => event.location_id ===index)
+            setEvents(locationEvents)
+            
+        }
+        fetchData()
+    },[index])
+
+    
+
     return (
         <div className='location-events'>
             <header>
-                <div className='location-image'>
-                    <img src={location.image} />
-                </div>
-
                 <div className='location-info'>
                     <h2>{location.name}</h2>
-                    <p>{location.address}, {location.city}, {location.state} {location.zip}</p>
+                    <p>{location.neighborhood}</p>
+                    <p>{location.description}</p>
                 </div>
             </header>
 
@@ -27,8 +42,9 @@ const LocationEvents = ({index}) => {
                             id={event.id}
                             title={event.title}
                             date={event.date}
-                            time={event.time}
-                            image={event.image}
+                            host={event.host}
+                            skillLevel={event.skill_level}
+                            image={event.imageurl}
                         />
                     ) : <h2><i className="fa-regular fa-calendar-xmark fa-shake"></i> {'No events scheduled at this location yet!'}</h2>
                 }

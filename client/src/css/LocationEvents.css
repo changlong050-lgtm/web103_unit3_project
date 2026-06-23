@@ -37,3 +37,8 @@
 .location-events main i {
     margin-right: 10px;
 }
+
+.select-option{
+    display: block;
+    margin: 20px auto;
+}
